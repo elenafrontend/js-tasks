@@ -1,1 +1,4 @@
-.idea/
+node-modules
+*.log
+.idea
+.DS_store
