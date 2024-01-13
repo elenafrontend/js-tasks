@@ -3,77 +3,97 @@ const titleInput = document.querySelector('#title');
 const bodyInput = document.querySelector('#body');
 const form = document.querySelector('form');
 
-// Create an instance of a db object for us to store the open database in
-let db;
+class IndexedDB {
 
-const requestDB = () => {
-  const request = window.indexedDB.open("notes", 1);
+  constructor(name) {
+    this.name = name
+    // Create an instance of a db object for us to store the open database in
+    this.db = null
+  }
 
-  // error handler signifies that the database didn't open successfully
-  request.addEventListener('error', () => {
-    console.log("Database failed to open");
-  });
+  openDB() {
+    const request = window.indexedDB.open(this.name, 1);
 
-  // success handler signifies that the database open successfully
-  request.addEventListener('success', () => {
-    console.log("Database opened successfully");
-
-    // Store the opened database object in the db variable
-    db = request.result;
-  });
-
-  // Set up the database tables if this has not already been done
-  request.addEventListener('upgradeneeded', (e) => {
-    // Grab a reference to the opened database
-    db = e.target.result;
-
-    // Create an objectStore in our database to store notes and an auto-incrementing key
-    // An objectStore is similar to a 'table' in a relational database
-    const objectStore = db.createObjectStore("notes", {
-      keyPath: "id",
-      autoIncrement: true,
+    // error handler signifies that the database didn't open successfully
+    request.addEventListener('error', () => {
+      console.log("Database failed to open");
     });
 
-    // Define what data items the objectStore will contain
-    objectStore.createIndex("title", "title", {unique: false});
-    objectStore.createIndex("body", "body", {unique: false});
+    // success handler signifies that the database open successfully
+    request.addEventListener('success', () => {
+      console.log("Database opened successfully");
 
-    console.log("Database setup complete");
-  })
-}
+      // Store the opened database object in the db variable
+      this.db = request.result;
+    });
 
-const addData = (e) => {
-  e.preventDefault();
+    // Set up the database tables if this has not already been done
+    request.addEventListener('upgradeneeded', (e) => {
+      // Grab a reference to the opened database
+      this.db = e.target.result;
 
-  const newItem = { title: titleInput.value, body: bodyInput.value };
+      // Create an objectStore in our database to store notes and an auto-incrementing key
+      // An objectStore is similar to a 'table' in a relational database
+      const objectStore = this.db.createObjectStore("notes_store", {
+        keyPath: "id",
+        autoIncrement: true,
+      });
 
-  // open a read/write db transaction, ready for adding the data
-  const transaction = db.transaction(['notes'], 'readwrite');
+      // Define what data items the objectStore will contain
+      objectStore.createIndex("title", "title", {unique: false});
+      objectStore.createIndex("body", "body", {unique: false});
 
-  // call an object store that's already been added to the database
-  const objectStore = transaction.objectStore('notes');
+      console.log("Database setup complete");
+    })
+  }
 
-  // Make a request to add our newItem object to the object store
-  const addRequest = objectStore.add(newItem);
+  deleteDB () {
+    const deleteRequest = window.indexedDB.deleteDatabase(this.name);
 
-  addRequest.addEventListener('success', () => {
-    // Clear the form, ready for adding the next entry
-    titleInput.value = '';
-    bodyInput.value = '';
-  });
+    deleteRequest.addEventListener('error', () => {
+      console.error("Error deleting database.");
+    })
 
-  // Report on the success of the transaction completing, when everything is done
-  transaction.addEventListener('complete', () => {
-    console.log('Transaction completed: database modification finished.');
+    deleteRequest.addEventListener('success', (e) => {
+      console.log("Database deleted successfully");
+      console.log(e.result); // should be undefined
+    })
+  }
 
-  });
+  addData (e) {
+    e.preventDefault();
 
-  transaction.addEventListener('error', () => console.log('Transaction not opened due to error'));
+    const newItem = { title: titleInput.value, body: bodyInput.value };
+
+    // open a read/write db transaction, ready for adding the data
+    const transaction = this.db.transaction(['notes_store'], 'readwrite');
+
+    // call an object store that's already been added to the database
+    const objectStore = transaction.objectStore('notes_store');
+
+    // Make a request to add our newItem object to the object store
+    const addRequest = objectStore.add(newItem);
+
+    addRequest.addEventListener('success', () => {
+      // Clear the form, ready for adding the next entry
+      titleInput.value = '';
+      bodyInput.value = '';
+    });
+
+    // Report on the success of the transaction completing, when everything is done
+    transaction.addEventListener('complete', () => {
+      console.log('Transaction completed: database modification finished.');
+
+    });
+
+    transaction.addEventListener('error', () => console.log('Transaction not opened due to error'));
+  }
 }
 
 window.addEventListener('load', () => {
-  // Open our database; it is created if it doesn't already exist
-  requestDB();
-  form.addEventListener("submit", addData);
+
+  const notesDb = new IndexedDB('notes_db');
+  notesDb.openDB()
+  form.addEventListener("submit", (e) => notesDb.addData(e));
 })
 
