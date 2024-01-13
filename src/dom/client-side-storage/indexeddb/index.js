@@ -1,4 +1,8 @@
 
+const titleInput = document.querySelector('#title');
+const bodyInput = document.querySelector('#body');
+const form = document.querySelector('form');
+
 // Create an instance of a db object for us to store the open database in
 let db;
 
@@ -38,8 +42,38 @@ const requestDB = () => {
   })
 }
 
+const addData = (e) => {
+  e.preventDefault();
+
+  const newItem = { title: titleInput.value, body: bodyInput.value };
+
+  // open a read/write db transaction, ready for adding the data
+  const transaction = db.transaction(['notes'], 'readwrite');
+
+  // call an object store that's already been added to the database
+  const objectStore = transaction.objectStore('notes');
+
+  // Make a request to add our newItem object to the object store
+  const addRequest = objectStore.add(newItem);
+
+  addRequest.addEventListener('success', () => {
+    // Clear the form, ready for adding the next entry
+    titleInput.value = '';
+    bodyInput.value = '';
+  });
+
+  // Report on the success of the transaction completing, when everything is done
+  transaction.addEventListener('complete', () => {
+    console.log('Transaction completed: database modification finished.');
+
+  });
+
+  transaction.addEventListener('error', () => console.log('Transaction not opened due to error'));
+}
+
 window.addEventListener('load', () => {
   // Open our database; it is created if it doesn't already exist
   requestDB();
+  form.addEventListener("submit", addData);
 })
 
