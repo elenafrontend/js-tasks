@@ -1,8 +1,4 @@
 
-const titleInput = document.querySelector('#title');
-const bodyInput = document.querySelector('#body');
-const form = document.querySelector('form');
-
 class IndexedDB {
 
   constructor(name) {
@@ -63,6 +59,8 @@ class IndexedDB {
   addData (e) {
     e.preventDefault();
 
+    const titleInput = e.target.elements.title;
+    const bodyInput = e.target.elements.body;
     const newItem = { title: titleInput.value, body: bodyInput.value };
 
     // open a read/write db transaction, ready for adding the data
@@ -91,9 +89,10 @@ class IndexedDB {
 }
 
 window.addEventListener('load', () => {
-
   const notesDb = new IndexedDB('notes_db');
   notesDb.openDB()
+
+  const form = document.querySelector('form');
   form.addEventListener("submit", (e) => notesDb.addData(e));
 })
 
