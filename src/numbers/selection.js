@@ -42,7 +42,7 @@ export function getPrimeNumbers(start, end) {
   for (let i = start; i < end; i += 1) {
     if (i >= 2 && !sieve[i]) {
       primes.push(i);
-      for (let j = i * 2; j < end; j += i) {
+      for (let j = i * i; j < end; j += i) {
         sieve[j] = true;
       }
     }
