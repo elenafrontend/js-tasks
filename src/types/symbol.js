@@ -10,12 +10,36 @@ class Split1 {
     this.delimiter = delimiter
   }
 
-  // using split
   [Symbol.split](str) {
-    const result = str.split(this.delimiter).join('/url/');
-    return result[0] === '/' ? result.substring(1) : result;
+    let result = this.useLoop(str);
+    if (result[0] === '/') {
+      result = result.substring(1)
+    }
+    return result.startsWith(this.delimiter) ? result : `${this.delimiter}/${result}`;
+  }
+
+  useSplit(str) {
+    return str.split(this.delimiter).join('/url/');
+  }
+
+  useLoop(str) {
+    const result = [];
+    let pos = 0;
+
+    while(pos < str.length) {
+      const matchPos = str.indexOf(this.delimiter, pos);
+      if (matchPos === -1) {
+        result.push(str.substring(pos));
+        break
+      }
+      result.push(`${str.substring(pos, matchPos)}/url/`);
+      pos = matchPos + this.delimiter.length;
+    }
+
+    return result.join('')
   }
 }
 
 console.log('urlsomePath'.split(new Split1('url'))); // "url/somePath"
 console.log('somePathurlAnother'.split(new Split1('url'))); // "url/somePath/url/Another"
+
