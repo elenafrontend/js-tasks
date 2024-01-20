@@ -1,7 +1,7 @@
 
 // ------------ Numbers ------------
 import { addThousandsSeparator } from "./src/numbers/numFormat.js";
-import { getPrimeNumbersFromRange } from "./src/numbers/selection.js";
+import { getPrimeNumbers } from "./src/numbers/selection.js";
 
 console.log('Format with thousand separator', addThousandsSeparator(1465893.12356));
-console.log("Primes between 2 and 10: ", getPrimeNumbersFromRange(2, 10));
+console.log(getPrimeNumbers(-10, 10000000));

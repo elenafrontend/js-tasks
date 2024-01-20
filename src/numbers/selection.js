@@ -1,27 +1,56 @@
 
 function isPrime(num) {
-  if (num === 2) {
-    return true
+  if (num < 0) {
+    return false;
   }
-  console.log('Math.sqrt', Math.sqrt(num))
-  const maxDivider = Math.ceil(Math.sqrt(num));
-  console.log("MaxDivider ", maxDivider);
+  const maxDivider = Math.floor(Math.sqrt(num));
   for (let i = 2; i <= maxDivider; i += 1) {
-    console.log(`${num} % ${i} = ${num % i}`);
     if (num % i === 0 && num !== maxDivider) return false;
   }
-  return true;
+  return num > 1;
 }
 
-export function getPrimeNumbersFromRange(num1, num2) {
-  const primes = [];
+export function getPrimeNumbers(start, end) {
 
-  for (let i = num1; i <= num2; i += 1) {
-    console.log("Number", i);
-    if(isPrime(i)) {
-      console.log(`${i} - prime`);
-      primes.push(i);
-    };
+  console.group(`Primes between ${start} and ${end}: `)
+
+  // with loop O(n^2)
+  {
+    console.time('with loop O(n^2)')
+    const primes = [];
+    for (let i = start; i <= end; i += 1) {
+      if (isPrime(i)) {
+        primes.push(i);
+      }
+      ;
+    }
+    console.timeEnd('with loop O(n^2)');
   }
+
+  // with array O(n^2)
+  console.time('with array O(n^2)')
+  Array.from({length: end - start + 1},
+      (_, index) => index + start).filter(isPrime);
+
+  console.timeEnd('with array O(n^2)');
+
+  // with sieve of Eratosthenes
+  console.time('with sieve of Eratosthenes O(n log log n)');
+  const primes = [];
+  const sieve = [];
+
+  for (let i = start; i < end; i += 1) {
+    if (i >= 2 && !sieve[i]) {
+      primes.push(i);
+      for (let j = i * 2; j < end; j += i) {
+        sieve[j] = true;
+      }
+    }
+  }
+  console.timeEnd('with sieve of Eratosthenes O(n log log n)');
+
+  console.groupEnd();
   return primes;
 }
+
+
