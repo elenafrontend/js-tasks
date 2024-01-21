@@ -19,6 +19,7 @@ export function sumInput() {
 }
 
 // https://learn.javascript.ru/task/maximal-subarray
+// https://www.codewars.com/kata/54521e9ec8e60bc4de000d6c/javascript
 export function getMaxSubSum(arr) {
 
   console.group(`Maximum subarray problem for ${arr}`)
