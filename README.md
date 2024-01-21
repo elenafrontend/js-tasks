@@ -14,6 +14,7 @@ implementing client side storage
 
 Some tasks below have implementation options with different time complexity(e.g. O(n) || O(n log log n)). You can see its calculation for such a task in the logs
 ## Numbers
+This module requires solving problems involving number operations.
 * [getPrimeNumbers](https://github.com/elenafrontend/js-tasks/tree/main/src/numbers/selection.js#L13) 
 
 ## Arrays
