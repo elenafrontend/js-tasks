@@ -17,3 +17,42 @@ export function sumInput() {
   }
   return sum;
 }
+
+// https://learn.javascript.ru/task/maximal-subarray
+export function getMaxSubSum(arr) {
+
+  console.group(`Maximum subarray problem for ${arr}`)
+
+  console.time('with O(n^2)')
+  {
+    let sum = arr[0];
+
+    for (let i = 0; i < arr.length; i += 1) {
+      let currentIndexSum = arr[i];
+
+      for (let j = i + 1; j < arr.length; j += 1) {
+        if (currentIndexSum + arr[j] < 0) break;
+        currentIndexSum += arr[j]
+      }
+
+      if (currentIndexSum > sum) {
+        sum = currentIndexSum;
+      }
+    }
+  }
+  console.timeEnd('with O(n^2)')
+
+  {
+    console.time('with O(n)')
+    let maxSum = arr[0];
+    let currentSum = 0;
+
+    for (let i = 0; i < arr.length; i += 1) {
+      currentSum = arr[i] + currentSum > 0 ? arr[i] + currentSum : 0;
+      maxSum = maxSum > currentSum ? maxSum : currentSum
+    }
+    console.timeEnd('with O(n)')
+
+    return maxSum;
+  }
+}
