@@ -35,10 +35,10 @@ export function getPrimeNumbers(start, end) {
 
   // with sieve of Eratosthenes
   console.time('with sieve of Eratosthenes O(n log log n)');
-  const primes = [];
+  let primes = [];
   const sieve = [];
 
-  for (let i = start; i < end; i += 1) {
+  for (let i = 0; i < end; i += 1) {
     if (i >= 2 && !sieve[i]) {
       primes.push(i);
       for (let j = i * i; j < end; j += i) {
@@ -46,6 +46,9 @@ export function getPrimeNumbers(start, end) {
       }
     }
   }
+  // can return this right away
+  // necessary for measuring time
+  primes = primes.filter(number => number >= start);
   console.timeEnd('with sieve of Eratosthenes O(n log log n)');
 
   console.groupEnd();
