@@ -22,7 +22,6 @@ export function getPrimeNumbers(start, end) {
       if (isPrime(i)) {
         primes.push(i);
       }
-      ;
     }
     console.timeEnd('with loop O(n^2)');
   }
