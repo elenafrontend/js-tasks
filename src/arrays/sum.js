@@ -48,8 +48,14 @@ export function getMaxSubSum(arr) {
     let currentSum = 0;
 
     for (let i = 0; i < arr.length; i += 1) {
-      currentSum = arr[i] + currentSum > 0 ? arr[i] + currentSum : 0;
-      maxSum = maxSum > currentSum ? maxSum : currentSum
+      currentSum += arr[i];
+      maxSum = Math.max(maxSum, currentSum);
+
+      // instead can be currentSum = Math.max(arr[i] + currentSum, 0)
+      // as for me, it's more readable
+      if(currentSum < 0) {
+        currentSum = 0
+      }
     }
     console.timeEnd('with O(n)')
 
