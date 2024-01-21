@@ -13,4 +13,5 @@ implementing client side storage
 [Source code](https://github.com/elenafrontend/js-tasks/tree/dom/src/dom/client-side-storage/indexeddb)
 
 ## Numbers
+This module requires solving problems involving number operations.
 * [getPrimeNumbers](https://github.com/elenafrontend/js-tasks/tree/main/src/numbers/selection.js#L13) 
