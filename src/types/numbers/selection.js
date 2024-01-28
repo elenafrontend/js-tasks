@@ -1,3 +1,4 @@
+import { addThousandsSeparator } from "./numFormat.js";
 
 function isPrime(num) {
   if (num < 0) {
@@ -12,7 +13,7 @@ function isPrime(num) {
 
 export function getPrimeNumbers(start, end) {
 
-  console.group(`Primes between ${start} and ${end}: `)
+  console.group(`Primes between ${addThousandsSeparator(start)} and ${addThousandsSeparator(end)}: `)
 
   // with loop O(n^2)
   {
