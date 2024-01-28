@@ -5,7 +5,7 @@
 // console.log('somePathurlAnother'.split(new Split1('url'))); // "url/somePath/url/Another"
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split#using_a_custom_splitter
-class Split1 {
+export class Split {
   constructor(delimiter) {
     this.delimiter = delimiter
   }
@@ -40,6 +40,4 @@ class Split1 {
   }
 }
 
-console.log('urlsomePath'.split(new Split1('url'))); // "url/somePath"
-console.log('somePathurlAnother'.split(new Split1('url'))); // "url/somePath/url/Another"
 
