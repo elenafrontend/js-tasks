@@ -10,7 +10,6 @@
     "lint": "npm run lint:js && npm run prettier",
     "lint:fix": "npm run prettier:fix && npm run lint:js -- --fix"
   },
-  "type": "module",
   "lint-staged": {
     "*.{ts,js}": [
       "eslint --fix"
