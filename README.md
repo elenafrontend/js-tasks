@@ -20,3 +20,11 @@ This module requires solving problems involving number operations.
 ## Arrays
 * [getMaxSubSum](https://github.com/elenafrontend/js-tasks/tree/main/src/arrays/sum.js#L22) maximum subarray sum
 * [sumInput](https://github.com/elenafrontend/js-tasks/tree/main/src/arrays/sum.js#L2) sum of entered numbers
+
+
+## Map, Set, Symbol
+[Demo](https://elenafrontend.github.io/js-tasks/src/types)
+
+* [class Split](https://github.com/elenafrontend/js-tasks/tree/main/src/types/symbol/index.js#L8) implement custom splitter
+* [removeAnagramDuplicates](https://github.com/elenafrontend/js-tasks/tree/main/src/types/map/index.js#L3) filter anagrams duplicates
+* [uniqueArray](https://github.com/elenafrontend/js-tasks/tree/main/src/types/set/index.js#L3) removes duplicates from an array
