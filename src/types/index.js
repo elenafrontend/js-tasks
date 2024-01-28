@@ -1,6 +1,6 @@
-import { Split } from "./symbol";
-import { removeAnagramDuplicates } from "./map";
-import {uniqueArray} from "./set";
+import { Split } from "./symbol/index.js";
+import { removeAnagramDuplicates } from "./map/index.js";
+import { uniqueArray } from "./set/index.js";
 
 alert('Use console for demo examples');
 
