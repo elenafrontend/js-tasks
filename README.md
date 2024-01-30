@@ -28,6 +28,7 @@ This module requires solving problems involving number operations.
 ## Map, Set, Symbol
 [Demo](https://elenafrontend.github.io/js-tasks/src/types)
 
-* [class Split](https://github.com/elenafrontend/js-tasks/tree/main/src/types/symbol/index.js#L8) implement custom splitter
 * [removeAnagramDuplicates](https://github.com/elenafrontend/js-tasks/tree/main/src/types/map/index.js#L3) filter anagrams duplicates
 * [uniqueArray](https://github.com/elenafrontend/js-tasks/tree/main/src/types/set/index.js#L3) removes duplicates from an array
+* [class ExtendedSet](https://github.com/elenafrontend/js-tasks/tree/main/src/types/set/index.js#L19) implement basic set operations(union, diff, intersection)
+* [class Split](https://github.com/elenafrontend/js-tasks/tree/main/src/types/symbol/index.js#L8) implement custom splitter
